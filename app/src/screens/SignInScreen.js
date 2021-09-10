@@ -39,7 +39,7 @@ const btns = StyleSheet.create({
   },
   btnWhite: {
     backgroundColor: '#fff',
-    color: '000',
+    color: '#000',
     borderColor: '#999',
     borderWidth: 1,
   }

@@ -42,7 +42,7 @@ const texts = StyleSheet.create({
     fontSize: wp('4%'),
   },
   purpleText: {
-    fontWeight: 700,
+    fontWeight: "700",
     color: '#BF5AF2',
   }
 });
