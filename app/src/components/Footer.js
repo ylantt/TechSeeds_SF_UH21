@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   circlePurple: {
     width: hp("5%"),
     height: hp("5%"),
-    borderRadius: "50%",
+    borderRadius: 50,
     backgroundColor: "#AEAEB2"
   },
   btnGroup: {

@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation, title, imageSrc, navigateComponent }) => {
       <Text style={texts.normalText}>{title}</Text>
       <Image
         style={styles.img}
-        source={require(`../../assets/images/components/actionType/${imageSrc}`)}
+        source={imageSrc}
       />
     </TouchableOpacity>
   </View>

@@ -10,28 +10,36 @@ const HomeScreen = ({ navigation }) => {
       <ActionRow
         navigation={navigation}
         title="Check your face's health"
-        imageSrc="face.png"
+        imageSrc={
+          require("../../assets/images/components/actionType/face.png"
+          )}
         navigateComponent="Camera"
       />
 
       <ActionRow
         navigation={navigation}
         title="Facial skin diary"
-        imageSrc="note.png"
+        imageSrc={
+          require("../../assets/images/components/actionType/note.png"
+          )}
         navigateComponent="DiaryList"
       />
 
       <ActionRow
         navigation={navigation}
         title="Tips for a healthy skin"
-        imageSrc="tip.png"
+        imageSrc={
+          require("../../assets/images/components/actionType/tip.png"
+          )}
         navigateComponent="Tip"
       />
 
       <ActionRow
         navigation={navigation}
         title="Connect doctor"
-        imageSrc="doctor.png"
+        imageSrc={
+          require("../../assets/images/components/actionType/doctor.png"
+          )}
         navigateComponent="DoctorList"
       />
 

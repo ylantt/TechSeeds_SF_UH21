@@ -73,7 +73,7 @@ export default function App({ navigation }) {
 const styles = StyleSheet.create({
   captureBtn: {
     borderWidth: 6,
-    borderRadius: "50%",
+    borderRadius: 50,
     borderColor: "white",
     height: hp("10%"),
     width: hp("10%"),
