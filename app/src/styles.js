@@ -25,6 +25,9 @@ const utilities = StyleSheet.create({
   },
   col2: {
     width: wp('47%')
+  },
+  greyBg: {
+    backgroundColor: "#EFF1F8"
   }
 });
 

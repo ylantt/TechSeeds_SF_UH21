@@ -1,14 +1,44 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import { bases, texts, utilities } from "../styles";
+import Footer from "../components/Footer";
+import ActionRow from "../components/ActionRow";
 
-const HomeScreen = () => {
-  return <Text style={styles.text}>HomeScreen</Text>;
+const HomeScreen = ({ navigation }) => {
+  return <View style={[bases.container, { padding: 0 }]}>
+    <View style={[utilities.flexStretch, utilities.greyBg]} >
+      <ActionRow
+        navigation={navigation}
+        title="Check your face's health"
+        imageSrc="face.png"
+        navigateComponent="Camera"
+      />
+
+      <ActionRow
+        navigation={navigation}
+        title="Facial skin diary"
+        imageSrc="note.png"
+        navigateComponent="DiaryList"
+      />
+
+      <ActionRow
+        navigation={navigation}
+        title="Tips for a healthy skin"
+        imageSrc="tip.png"
+        navigateComponent="Tip"
+      />
+
+      <ActionRow
+        navigation={navigation}
+        title="Connect doctor"
+        imageSrc="doctor.png"
+        navigateComponent="DoctorList"
+      />
+
+      <Text style={[texts.normalText, utilities.mt3]}>Developed by TechSeeds</Text>
+    </View>
+    <Footer {...navigation} />
+  </View>
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 30
-  }
-});
 
 export default HomeScreen;
