@@ -7,6 +7,7 @@ import SignInScreen from "./src/screens/SignInScreen";
 import InfoFormScreen from "./src/screens/InfoFormScreen";
 import CameraScreen from "./src/screens/CameraScreen";
 import EvaluateImgScreen from "./src/screens/EvaluateImgScreen";
+import DoctorListScreen from "./src/screens/DoctorListScreen";
 
 const navigator = createStackNavigator(
   {
@@ -17,6 +18,7 @@ const navigator = createStackNavigator(
     InfoForm: InfoFormScreen,
     Camera: CameraScreen,
     EvaluateImg: EvaluateImgScreen,
+    DoctorList: DoctorListScreen,
   },
   {
     initialRouteName: "Welcome",
