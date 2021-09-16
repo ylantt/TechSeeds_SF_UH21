@@ -9,3 +9,13 @@ exports.getDoctorList = async (req, res) => {
     console.log(e);
   }
 }
+
+exports.getDoctor = async (req, res) => {
+  try {
+    const doctor = await Doctor.findById(req.params.id);
+
+    res.send(doctor);
+  } catch (e) {
+    console.log(e);
+  }
+}

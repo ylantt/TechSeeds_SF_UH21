@@ -14,6 +14,11 @@ const utilities = StyleSheet.create({
   flexStretch: {
     flex: 1
   },
+  flexRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
   mt7: {
     marginTop: hp('7%'),
   },

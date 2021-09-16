@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.get('/doctors', doctorController.getDoctorList);
 
+router.route('/doctor/:id').get(doctorController.getDoctor)
+
 module.exports = router;
