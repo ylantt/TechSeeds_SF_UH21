@@ -24,7 +24,7 @@ const signInWithGoogle = async (props) => {
     });
 
     if (result.type === "success") {
-      console.log("LoginScreen.js", result.user.id);
+      console.log(result.idToken);
       return result.accessToken;
     } else {
       return { cancelled: true };
