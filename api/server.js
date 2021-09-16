@@ -10,6 +10,9 @@ dotenv.config({ path: "./config/config.env" });
 // Connect to database
 connectDB();
 
+// Route file
+const auth = require("./routes/auth");
+
 const app = express();
 
 // Body parser
@@ -23,6 +26,9 @@ if (process.env.NODE_ENV === "development") {
 app.get("/", (req, res) => {
   res.send("hello");
 });
+
+// Mount routes
+app.use("/api/v1/auth", auth);
 
 const PORT = process.env.PORT || 5000;
 
