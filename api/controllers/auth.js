@@ -12,7 +12,7 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
 
   const response = await client.verifyIdToken({
     idToken,
-    audience: process.env.GOOGLE_CLIENT_ID,
+    audience: process.env.ANDROID_GOOGLE_CLIENT_ID,
   });
 
   const { email_verified, name, email } = response.payload;

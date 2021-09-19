@@ -9,20 +9,14 @@ import {
 } from "react-native";
 import { bases, buttons, texts, images, utilities } from "../styles";
 import * as Google from "expo-google-app-auth";
-import trackerApi from "../api/tracker";
+import axios from "axios";
 
 const IOS_CLIENT_ID =
   "135161324527-i8s84tfks2f8c2jbitv468osdli71281.apps.googleusercontent.com";
-const ANDROID_CLIENT_ID = "";
+const ANDROID_CLIENT_ID =
+  "135161324527-2ufm8m4i4ole49odc9e4ok1ed7cm3oc1.apps.googleusercontent.com";
 
-const getTokenData = async (idToken) => {
-  try {
-    const res = await trackerApi.post("/auth/googlelogin", { idToken });
-    console.log(res);
-  } catch (err) {
-    console.log(err);
-  }
-};
+const baseUrl = "http://192.168.1.6:5000";
 
 const signInWithGoogle = async (props) => {
   try {
@@ -37,7 +31,10 @@ const signInWithGoogle = async (props) => {
       console.log(idToken);
       // Get token from server
       try {
-        const res = await trackerApi.post("/auth/googlelogin", { idToken });
+        const res = await axios.post(`${baseUrl}/api/v1/auth/googlelogin`, {
+          idToken,
+        });
+
         console.log(res);
       } catch (err) {
         console.log(err);
