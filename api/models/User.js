@@ -34,7 +34,6 @@ const UserSChema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      unique: true,
       match: [/^\(\d{3}\)\s\d{3}\s-\s\d{4}/g, "Telephone number is invalid"],
     },
     isPremium: {
@@ -57,7 +56,6 @@ UserSChema.pre("save", async function (next) {
 
 // Signed JWT and return
 UserSChema.methods.getSignedJwtToken = function () {
-  console.log("get jwt");
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });

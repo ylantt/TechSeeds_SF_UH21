@@ -6,15 +6,19 @@ import {
   Image,
   StyleSheet,
   Button,
+  Platform,
 } from "react-native";
 import { bases, buttons, texts, images, utilities } from "../styles";
 import * as Google from "expo-google-app-auth";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
 const IOS_CLIENT_ID =
   "135161324527-i8s84tfks2f8c2jbitv468osdli71281.apps.googleusercontent.com";
 const ANDROID_CLIENT_ID =
   "135161324527-2ufm8m4i4ole49odc9e4ok1ed7cm3oc1.apps.googleusercontent.com";
+
+const platform = Platform.OS;
 
 const baseUrl = "http://192.168.1.6:5000";
 
@@ -28,14 +32,23 @@ const signInWithGoogle = async (props) => {
 
     if (result.type === "success") {
       const idToken = result.idToken;
-      console.log(idToken);
       // Get token from server
       try {
-        const res = await axios.post(`${baseUrl}/api/v1/auth/googlelogin`, {
-          idToken,
-        });
+        const { data } = await axios.post(
+          `${baseUrl}/api/v1/auth/googlelogin`,
+          {
+            idToken,
+            platform,
+          }
+        );
 
-        console.log(res);
+        if (data.success) {
+          await SecureStore.setItemAsync("secure_token", data.token);
+          props.navigation.navigate("Home");
+        } else {
+          console.log("Some thing went wrong!");
+          return;
+        }
       } catch (err) {
         console.log(err);
       }

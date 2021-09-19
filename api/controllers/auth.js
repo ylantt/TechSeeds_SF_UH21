@@ -8,34 +8,29 @@ const asyncHandler = require("../middlewares/async");
 // @route   POST /api/v1/auth/googlelogin
 // @access  Public
 exports.googleLogin = asyncHandler(async (req, res, next) => {
-  const { idToken } = req.body;
+  const { idToken, platform } = req.body;
+
+  const audience =
+    platform === "ios"
+      ? process.env.IOS_GOOGLE_CLIENT_ID
+      : process.env.ANDROID_GOOGLE_CLIENT_ID;
 
   const response = await client.verifyIdToken({
     idToken,
-    audience: process.env.ANDROID_GOOGLE_CLIENT_ID,
+    audience,
   });
 
   const { email_verified, name, email } = response.payload;
 
   if (email_verified) {
-    const user = await User.find({ email });
-
-    console.log(user);
+    const user = await User.findOne({ email }).exec();
 
     if (user) {
-      // sendTokenResponse(user, 200, res);
-      res.status(200).json({
-        success: true,
-        data: user,
-      });
+      sendTokenResponse(user, 200, res);
     } else {
       let password = email + process.env.JWT_SECRET;
       const newUser = await User.create({ name, email, password });
-      // sendTokenResponse(newUser, 200, res);
-      res.status(200).json({
-        success: true,
-        data: newUser,
-      });
+      sendTokenResponse(newUser, 200, res);
     }
   } else {
     return new ErrorResponse("Some thing went wrong!", 400);
