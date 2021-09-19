@@ -9,13 +9,22 @@ import {
 } from "react-native";
 import { bases, buttons, texts, images, utilities } from "../styles";
 import * as Google from "expo-google-app-auth";
+import trackerApi from "../api/tracker";
 
 const IOS_CLIENT_ID =
   "135161324527-i8s84tfks2f8c2jbitv468osdli71281.apps.googleusercontent.com";
 const ANDROID_CLIENT_ID = "";
 
+const getTokenData = async (idToken) => {
+  try {
+    const res = await trackerApi.post("/auth/googlelogin", { idToken });
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const signInWithGoogle = async (props) => {
-  console.log(props.navigation);
   try {
     const result = await Google.logInAsync({
       androidClientId: ANDROID_CLIENT_ID,
@@ -24,13 +33,20 @@ const signInWithGoogle = async (props) => {
     });
 
     if (result.type === "success") {
-      console.log(result.idToken);
-      return result.accessToken;
+      const idToken = result.idToken;
+      console.log(idToken);
+      // Get token from server
+      try {
+        const res = await trackerApi.post("/auth/googlelogin", { idToken });
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       return { cancelled: true };
     }
   } catch (error) {
-    console.log("Oh no");
+    console.log("Some thing went wrong!");
     return { error: true };
   }
 };
