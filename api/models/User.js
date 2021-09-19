@@ -57,6 +57,7 @@ UserSChema.pre("save", async function (next) {
 
 // Signed JWT and return
 UserSChema.methods.getSignedJwtToken = function () {
+  console.log("get jwt");
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });

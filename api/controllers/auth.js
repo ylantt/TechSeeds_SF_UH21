@@ -18,14 +18,24 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
   const { email_verified, name, email } = response.payload;
 
   if (email_verified) {
-    const user = await User.findOne();
+    const user = await User.find({ email });
+
+    console.log(user);
 
     if (user) {
-      sendTokenResponse(user, 200, res);
+      // sendTokenResponse(user, 200, res);
+      res.status(200).json({
+        success: true,
+        data: user,
+      });
     } else {
       let password = email + process.env.JWT_SECRET;
       const newUser = await User.create({ name, email, password });
-      sendTokenResponse(newUser, 200, res);
+      // sendTokenResponse(newUser, 200, res);
+      res.status(200).json({
+        success: true,
+        data: newUser,
+      });
     }
   } else {
     return new ErrorResponse("Some thing went wrong!", 400);
