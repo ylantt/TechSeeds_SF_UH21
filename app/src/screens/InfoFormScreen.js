@@ -18,9 +18,24 @@ import {
 import RadioButton from "expo-radio-button";
 import NumberPlease from "react-native-number-please";
 import trackApi from "../api/tracker";
+import * as SecureStore from "expo-secure-store";
 
 const updateUserInfo = async (yearOfBirth, gender, phone) => {
-  // const res = await trackApi.post('/user:')
+  const token = await SecureStore.getItemAsync("secure_token");
+
+  const res = await trackApi.post(
+    "/user",
+    {
+      yearOfBirth,
+      gender,
+      phone,
+    },
+    {
+      headers: { authorization: `Bearer ${token}` },
+    }
+  );
+
+  console.log(res.data);
 };
 
 const InfoFormScreen = ({ navigation }) => {
@@ -31,7 +46,7 @@ const InfoFormScreen = ({ navigation }) => {
   const [phone, setPhone] = useState("");
 
   return (
-    <View style={[bases.container]}>
+    <ScrollView keyboardShouldPersistTaps="never" style={[bases.container]}>
       <View style={utilities.flexStretch}>
         <Image
           style={images.avtIcon}
@@ -41,7 +56,7 @@ const InfoFormScreen = ({ navigation }) => {
           Tell us a bit about yourself
         </Text>
         <View style={utilities.mt7}>
-          <ScrollView keyboardShouldPersistTaps="never">
+          <View>
             <Text>Phone number</Text>
             <TextInput
               keyboardType="number-pad"
@@ -49,7 +64,7 @@ const InfoFormScreen = ({ navigation }) => {
               placeholder="Phone number"
               onChangeText={(phone) => setPhone(phone)}
             />
-          </ScrollView>
+          </View>
           <View>
             <Text>Year of birth</Text>
             <NumberPlease
@@ -83,7 +98,7 @@ const InfoFormScreen = ({ navigation }) => {
       <TouchableOpacity onPress={() => updateUserInfo(year, gender, phone)}>
         <Text style={[buttons.btn, buttons.bottomBtn]}>Let's get started</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 

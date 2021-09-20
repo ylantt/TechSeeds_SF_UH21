@@ -17,6 +17,7 @@ connectDB();
 
 // Route file
 const auth = require("./routes/auth");
+const user = require("./routes/user");
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use("/api/v1/doctors", doctorRoutes);
 
 // Mount routes
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/user", user);
 
 app.use(errorHandler);
 

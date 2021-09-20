@@ -12,6 +12,7 @@ import { bases, buttons, texts, images, utilities } from "../styles";
 import * as Google from "expo-google-app-auth";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
+import trackerApi from "../api/tracker";
 
 const IOS_CLIENT_ID =
   "135161324527-i8s84tfks2f8c2jbitv468osdli71281.apps.googleusercontent.com";
@@ -19,8 +20,6 @@ const ANDROID_CLIENT_ID =
   "135161324527-2ufm8m4i4ole49odc9e4ok1ed7cm3oc1.apps.googleusercontent.com";
 
 const platform = Platform.OS;
-
-const baseUrl = "http://192.168.1.6:5000";
 
 const signInWithGoogle = async (props) => {
   try {
@@ -34,13 +33,10 @@ const signInWithGoogle = async (props) => {
       const idToken = result.idToken;
       // Get token from server
       try {
-        const { data } = await axios.post(
-          `${baseUrl}/api/v1/auth/googlelogin`,
-          {
-            idToken,
-            platform,
-          }
-        );
+        const { data } = await trackerApi.post(`/auth/googlelogin`, {
+          idToken,
+          platform,
+        });
 
         if (data.success) {
           await SecureStore.setItemAsync("secure_token", data.token);

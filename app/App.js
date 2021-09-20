@@ -23,7 +23,7 @@ const navigator = createStackNavigator(
     DoctorDetail: DoctorDetailScreen,
   },
   {
-    initialRouteName: "InfoForm",
+    initialRouteName: "Welcome",
     defaultNavigationOptions: {
       title: "Skinee",
     },
