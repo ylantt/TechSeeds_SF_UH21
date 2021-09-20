@@ -19,7 +19,7 @@ const navigator = createStackNavigator(
     EvaluateImg: EvaluateImgScreen,
   },
   {
-    initialRouteName: "Welcome",
+    initialRouteName: "InfoForm",
     defaultNavigationOptions: {
       title: "Skinee",
     },

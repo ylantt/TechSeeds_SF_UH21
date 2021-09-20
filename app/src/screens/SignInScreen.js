@@ -44,7 +44,7 @@ const signInWithGoogle = async (props) => {
 
         if (data.success) {
           await SecureStore.setItemAsync("secure_token", data.token);
-          props.navigation.navigate("Home");
+          props.navigation.navigate("InfoForm");
         } else {
           console.log("Some thing went wrong!");
           return;
