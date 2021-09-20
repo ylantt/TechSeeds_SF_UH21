@@ -34,7 +34,7 @@ class DoctorDetailScreen extends React.Component {
               <Text style={[
                 texts.midText, {
                   textAlign: "left",
-                  fontWeight: 700
+                  fontWeight: "700"
                 }
               ]}>{this.state.doctor.name}</Text>
               <Text>{this.state.doctor.company}</Text>

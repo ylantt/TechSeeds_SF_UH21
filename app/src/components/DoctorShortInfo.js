@@ -14,7 +14,7 @@ const DoctorShortInfo = ({ navigation, rating, title, imageSrc, connection, doct
       <View>
         <Text
           style={[texts.midText, {
-            fontWeight: 700,
+            fontWeight: "700",
             textAlign: "left"
           }]}>{title}</Text>
         <Text style={utilities.mt3}>km</Text>
