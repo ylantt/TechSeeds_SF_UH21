@@ -19,11 +19,6 @@ import RadioButton from "expo-radio-button";
 import NumberPlease from "react-native-number-please";
 import trackApi from "../api/tracker";
 import * as SecureStore from "expo-secure-store";
-import {
-  TextField,
-  FilledTextField,
-  OutlinedTextField,
-} from "react-native-material-textfield";
 
 const updateUserInfo = async (navigation, yearOfBirth, gender, phone) => {
   const token = await SecureStore.getItemAsync("secure_token");
