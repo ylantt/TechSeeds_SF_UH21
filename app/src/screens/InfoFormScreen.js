@@ -19,11 +19,16 @@ import RadioButton from "expo-radio-button";
 import NumberPlease from "react-native-number-please";
 import trackApi from "../api/tracker";
 import * as SecureStore from "expo-secure-store";
+import {
+  TextField,
+  FilledTextField,
+  OutlinedTextField,
+} from "react-native-material-textfield";
 
-const updateUserInfo = async (yearOfBirth, gender, phone) => {
+const updateUserInfo = async (navigation, yearOfBirth, gender, phone) => {
   const token = await SecureStore.getItemAsync("secure_token");
 
-  const res = await trackApi.post(
+  const { data } = await trackApi.post(
     "/user",
     {
       yearOfBirth,
@@ -35,14 +40,18 @@ const updateUserInfo = async (yearOfBirth, gender, phone) => {
     }
   );
 
-  console.log(res.data);
+  if (data.success) {
+    navigation.navigate("Home");
+  } else {
+    console.log(data.error);
+  }
 };
 
 const InfoFormScreen = ({ navigation }) => {
   const initialYear = [{ id: "year", value: 18 }];
   const [year, setYear] = useState(initialYear);
-  const yearNumber = [{ id: "year", label: "Ages", min: 12, max: 60 }];
-  const [gender, setGender] = useState("Male");
+  const yearNumber = [{ id: "year", min: 1971, max: 2011 }];
+  const [gender, setGender] = useState("male");
   const [phone, setPhone] = useState("");
 
   return (
@@ -64,6 +73,12 @@ const InfoFormScreen = ({ navigation }) => {
               placeholder="Phone number"
               onChangeText={(phone) => setPhone(phone)}
             />
+            <TextInput
+              keyboardType="number-pad"
+              style={formFields.input}
+              placeholder="Phone number"
+              onChangeText={(phone) => setPhone(phone)}
+            />
           </View>
           <View>
             <Text>Year of birth</Text>
@@ -76,7 +91,7 @@ const InfoFormScreen = ({ navigation }) => {
           <View>
             <Text>Gender</Text>
             <RadioButton
-              value="Male"
+              value="male"
               containerStyle={{ marginBottom: 10 }}
               selected={gender}
               onSelected={(value) => setGender(value)}
@@ -85,7 +100,7 @@ const InfoFormScreen = ({ navigation }) => {
               <Text>Male</Text>
             </RadioButton>
             <RadioButton
-              value="Female"
+              value="female"
               selected={gender}
               onSelected={(value) => setGender(value)}
               radioBackground="gray"
@@ -95,7 +110,9 @@ const InfoFormScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <TouchableOpacity onPress={() => updateUserInfo(year, gender, phone)}>
+      <TouchableOpacity
+        onPress={() => updateUserInfo(navigation, year[0].value, gender, phone)}
+      >
         <Text style={[buttons.btn, buttons.bottomBtn]}>Let's get started</Text>
       </TouchableOpacity>
     </ScrollView>
