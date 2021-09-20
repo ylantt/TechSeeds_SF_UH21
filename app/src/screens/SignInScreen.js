@@ -21,7 +21,7 @@ const ANDROID_CLIENT_ID =
 
 const platform = Platform.OS;
 
-const signInWithGoogle = async (props) => {
+const signInWithGoogle = async (navigation) => {
   try {
     const result = await Google.logInAsync({
       androidClientId: ANDROID_CLIENT_ID,
@@ -40,7 +40,11 @@ const signInWithGoogle = async (props) => {
 
         if (data.success) {
           await SecureStore.setItemAsync("secure_token", data.token);
-          props.navigation.navigate("InfoForm");
+          if (data.isFullData) {
+            navigation.navigate("Home");
+          } else {
+            navigation.navigate("InfoForm");
+          }
         } else {
           console.log("Some thing went wrong!");
           return;
@@ -57,7 +61,7 @@ const signInWithGoogle = async (props) => {
   }
 };
 
-const SignInScreen = (props) => {
+const SignInScreen = ({ navigation }) => {
   return (
     <View style={[bases.container]}>
       <Image
@@ -77,7 +81,7 @@ const SignInScreen = (props) => {
             Sign up with Facebook
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => signInWithGoogle(props)}>
+        <TouchableOpacity onPress={() => signInWithGoogle(navigation)}>
           <Text style={[buttons.btn, buttons.roundBtn, btns.btnWhite]}>
             Sign up with Google
           </Text>

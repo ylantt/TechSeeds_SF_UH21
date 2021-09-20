@@ -68,12 +68,6 @@ const InfoFormScreen = ({ navigation }) => {
               placeholder="Phone number"
               onChangeText={(phone) => setPhone(phone)}
             />
-            <TextInput
-              keyboardType="number-pad"
-              style={formFields.input}
-              placeholder="Phone number"
-              onChangeText={(phone) => setPhone(phone)}
-            />
           </View>
           <View>
             <Text>Year of birth</Text>

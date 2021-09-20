@@ -26,10 +26,16 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({ email }).exec();
 
     if (user) {
+      if (!user.phone) {
+        user.isFullData = false;
+      } else {
+        user.isFullData = true;
+      }
       sendTokenResponse(user, 200, res);
     } else {
       let password = email + process.env.JWT_SECRET;
       const newUser = await User.create({ name, email, password });
+      newUser.isFullData = false;
       sendTokenResponse(newUser, 200, res);
     }
   } else {
@@ -54,6 +60,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   }
 
   res.status(statusCode).cookie("token", token, options).json({
+    isFullData: user.isFullData,
     success: true,
     token,
   });
