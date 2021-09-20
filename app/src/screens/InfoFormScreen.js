@@ -17,6 +17,18 @@ import {
 } from "../styles";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Dropdown } from "react-native-material-dropdown";
+
+const data = [
+  {
+    label: "data 1",
+    accessibilityLabel: "Your label",
+  },
+  {
+    label: "data 2",
+    accessibilityLabel: "Your label",
+  },
+];
 
 const InfoFormScreen = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
@@ -49,14 +61,15 @@ const InfoFormScreen = ({ navigation }) => {
             secureTextEntry={true}
             placeholder="Password"
           />
+          <RadioButtonRN data={data} selectedBtn={(e) => console.log(e)} />
           <DateTimePicker
             testID="dateTimePicker"
             value={date}
-            mode="year"
+            mode=""
             is24Hour={true}
             display="default"
           />
-          <Picker
+          {/* <Picker
             selectedValue={selectedLanguage}
             onValueChange={(itemValue, itemIndex) =>
               setSelectedLanguage(itemValue)
@@ -64,7 +77,7 @@ const InfoFormScreen = ({ navigation }) => {
           >
             <Picker.Item label="Male" value="Male" />
             <Picker.Item label="Female" value="Female" />
-          </Picker>
+          </Picker> */}
           {/* <TextInput style={formFields.input} placeholder="Gender" /> */}
           <TextInput style={formFields.input} placeholder="Phone number" />
         </View>
