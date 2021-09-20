@@ -32,10 +32,8 @@ const UserSChema = new mongoose.Schema(
       type: String,
       enum: ["male", "female"],
     },
-    phone: {
-      type: String,
-      match: [/^\(\d{3}\)\s\d{3}\s-\s\d{4}/g, "Telephone number is invalid"],
-    },
+    yearOfBirth: Number,
+    phone: String,
     isPremium: {
       type: Boolean,
       default: false,

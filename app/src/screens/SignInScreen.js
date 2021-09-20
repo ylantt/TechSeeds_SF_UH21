@@ -12,6 +12,7 @@ import { bases, buttons, texts, images, utilities } from "../styles";
 import * as Google from "expo-google-app-auth";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
+import trackerApi from "../api/tracker";
 
 const IOS_CLIENT_ID =
   "135161324527-i8s84tfks2f8c2jbitv468osdli71281.apps.googleusercontent.com";
@@ -20,9 +21,7 @@ const ANDROID_CLIENT_ID =
 
 const platform = Platform.OS;
 
-const baseUrl = "http://192.168.1.6:5000";
-
-const signInWithGoogle = async (props) => {
+const signInWithGoogle = async (navigation) => {
   try {
     const result = await Google.logInAsync({
       androidClientId: ANDROID_CLIENT_ID,
@@ -34,17 +33,18 @@ const signInWithGoogle = async (props) => {
       const idToken = result.idToken;
       // Get token from server
       try {
-        const { data } = await axios.post(
-          `${baseUrl}/api/v1/auth/googlelogin`,
-          {
-            idToken,
-            platform,
-          }
-        );
+        const { data } = await trackerApi.post(`/auth/googlelogin`, {
+          idToken,
+          platform,
+        });
 
         if (data.success) {
           await SecureStore.setItemAsync("secure_token", data.token);
-          props.navigation.navigate("Home");
+          if (data.isFullData) {
+            navigation.navigate("Home");
+          } else {
+            navigation.navigate("InfoForm");
+          }
         } else {
           console.log("Some thing went wrong!");
           return;
@@ -61,7 +61,7 @@ const signInWithGoogle = async (props) => {
   }
 };
 
-const SignInScreen = (props) => {
+const SignInScreen = ({ navigation }) => {
   return (
     <View style={[bases.container]}>
       <Image
@@ -81,7 +81,7 @@ const SignInScreen = (props) => {
             Sign up with Facebook
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => signInWithGoogle(props)}>
+        <TouchableOpacity onPress={() => signInWithGoogle(navigation)}>
           <Text style={[buttons.btn, buttons.roundBtn, btns.btnWhite]}>
             Sign up with Google
           </Text>
