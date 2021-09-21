@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import { bases, utilities, buttons } from "../styles";
+import { bases, utilities, buttons, texts } from "../styles";
 import axios from "axios";
 
 const getDataFromModel = async (photoBase64) => {
@@ -65,9 +65,7 @@ const EvaluateImgScreen = ({ navigation }) => {
           source={{ uri: photo.uri }}
           style={[styles.evaluateImg, utilities.mt3]}
         />
-      </View>
-      <View>
-        <Text>{name}</Text>
+        <Text style={[texts.midText, utilities.mt3]}>{name}</Text>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Intro")}>
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
