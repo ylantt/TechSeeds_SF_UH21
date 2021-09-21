@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
-import { bases, texts } from "../styles";
+import { bases, texts, utilities } from "../styles";
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function App({ navigation }) {
@@ -38,32 +38,33 @@ export default function App({ navigation }) {
           setCameraRef(ref);
         }}
         autoFocus="on"
+        style={[bases.container, { padding: 0, }]}
       >
         <View>
-          <TouchableOpacity
-            style={{ alignSelf: "center" }}
-            // convert cameratype from front <=> back 
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-            <Text style={[texts.normalText, styles.flipBtn]}> Flip </Text>
-          </TouchableOpacity>
+          <View style={[utilities.flexRow, styles.groupBtn]}>
+            <TouchableOpacity
+              // capture image and send to Image component
+              onPress={async () => {
+                if (cameraRef) {
+                  let photo = await cameraRef.takePictureAsync("photo");
+                  navigation.navigate("EvaluateImg", { photo });
+                }
+              }}>
+              <View style={styles.captureBtn} ></View>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={{ alignSelf: "center" }}
-            // capture image and send to Image component
-            onPress={async () => {
-              if (cameraRef) {
-                let photo = await cameraRef.takePictureAsync("photo");
-                navigation.navigate("EvaluateImg", { photo });
-              }
-            }}>
-            <View style={styles.captureBtn} ></View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              // convert cameratype from front <=> back 
+              onPress={() => {
+                setType(
+                  type === Camera.Constants.Type.back
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back
+                );
+              }}>
+              <Text style={[texts.normalText, styles.flipBtn]}> Flip </Text>
+            </TouchableOpacity>
+          </View>
         </View >
       </Camera >
     </View >
@@ -71,6 +72,14 @@ export default function App({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  groupBtn: {
+    flex: 1,
+    // alignItems: "flex-end",
+    // justifyContent: "flex-end",
+    position: "absolute",
+    top: hp("78%"),
+    alignSelf: "center"
+  },
   captureBtn: {
     borderWidth: 6,
     borderRadius: 50,
@@ -78,9 +87,8 @@ const styles = StyleSheet.create({
     height: hp("10%"),
     width: hp("10%"),
     backgroundColor: "transparent",
-    position: 'absolute',
-    left: -hp("5%"),
-    top: hp("77%"),
+    marginBottom: hp("2%"),
+    marginRight: 20
   },
   flipBtn: {
     borderRadius: 8,
@@ -88,9 +96,6 @@ const styles = StyleSheet.create({
     height: hp("5%"),
     width: hp("10%"),
     backgroundColor: "white",
-    position: 'absolute',
-    left: hp("8%"),
-    top: hp("80%"),
     lineHeight: hp("5%"),
   }
 });
