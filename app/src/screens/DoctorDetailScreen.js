@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { bases, texts, utilities } from "../styles";
 import Footer from "../components/Footer";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -40,6 +40,30 @@ class DoctorDetailScreen extends React.Component {
               <Text>{this.state.doctor.company}</Text>
             </View>
           </View>
+
+          <View style={[utilities.flexRow, styles.rowIcon, utilities.mt3]}>
+            <View>
+              <Image style={styles.smallIcon} source={require("../../assets/images/components/doctor/heartIcon.png")} />
+              <Text>{this.state.doctor.connection}</Text>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Chat")}
+            >
+              <Image style={styles.smallIcon} source={require("../../assets/images/components/doctor/chatIcon.png")} />
+              <Text>Connect</Text>
+            </TouchableOpacity>
+
+            <View>
+              <Image style={styles.smallIcon} source={require("../../assets/images/components/doctor/shareIcon.png")} />
+              <Text>Share</Text>
+            </View>
+
+            <View>
+              <Image style={styles.smallIcon} source={require("../../assets/images/components/doctor/moreIcon.png")} />
+              <Text>More</Text>
+            </View>
+          </View>
         </View>
         <Footer {...this.props.navigation} />
       </View >
@@ -53,6 +77,16 @@ const styles = StyleSheet.create({
     height: hp('30%'),
     alignSelf: "center",
     marginVertical: hp("2%")
+  },
+  smallIcon: {
+    width: hp('5%'),
+    height: hp('5%'),
+    alignSelf: "center",
+    marginVertical: hp("2%")
+  },
+  rowIcon: {
+    justifyContent: "space-evenly",
+    marginHorizontal: wp("15%")
   }
 });
 
