@@ -64,6 +64,8 @@ class DoctorDetailScreen extends React.Component {
               <Text>More</Text>
             </View>
           </View>
+
+          <Text style={[utilities.mt7, texts.normalText]}>{this.state.doctor.info}</Text>
         </View>
         <Footer {...this.props.navigation} />
       </View >
