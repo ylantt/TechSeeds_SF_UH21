@@ -4,32 +4,6 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { bases, utilities, buttons, texts } from "../styles";
 import axios from "axios";
 
-const getDataFromModel = async (photoBase64) => {
-  const result = {};
-  try {
-    const { data } = await axios.post(
-      "http://192.168.1.9:8000/v1/object-detection/yolov5s",
-      {
-        photoBase64,
-      }
-    );
-
-    result.success = true;
-
-    if (data.name === "nam_da") {
-      result.name = "Nám da";
-    } else if (data.name === "viem_da_tiet_ba") {
-      result.name = "Viêm da tiết bã";
-    } else if (data.name === "mun_viem_do") {
-      result.name = "Mụn viêm đỏ";
-    }
-  } catch {
-    result.success = false;
-    result.name = "Không nhận dạng được loại bệnh nào";
-  }
-  return result;
-};
-
 const EvaluateImgScreen = ({ navigation }) => {
   // get photo from camera
   const photo = navigation.getParam("photo");
