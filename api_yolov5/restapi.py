@@ -6,7 +6,8 @@ import io
 from PIL import Image
 
 import torch
-from flask import Flask, request
+from flask import Flask, request, jsonify
+import base64
 
 app = Flask(__name__)
 
@@ -17,16 +18,25 @@ DETECTION_URL = "/v1/object-detection/yolov5s"
 def predict():
     if not request.method == "POST":
         return
+    print('hello')
+    
+    dataDict = request.get_json()
+    photoBase64 = dataDict["photoBase64"]
+    
+    image_64_decode = base64.decodebytes(bytes(photoBase64, "UTF-8"))
+    image_result = open('deer_decode.jpg', 'wb')
+    image_result.write(image_64_decode)
 
-    if request.files.get("image"):
-        image_file = request.files["image"]
-        image_bytes = image_file.read()
+    # if request.files.get("image"):
+    #     image_file = request.files["image"]
+    #     print(image_file)
+    #     image_bytes = image_file.read()
 
-        img = Image.open(io.BytesIO(image_bytes))
+    img = Image.open('D:\UDEMY\PRACTICE\TechSeeds_SF_UH21\api_yolov5\deer_decode.jpg')
 
-        results = model(img, size=640)
-        data = results.pandas().xyxy[0].to_json(orient="records")
-        return data
+    results = model(img, size=640)
+    data = results.pandas().xyxy[0].to_json(orient="records")
+    return data
 
 
 if __name__ == "__main__":
