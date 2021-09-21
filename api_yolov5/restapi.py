@@ -8,6 +8,7 @@ from PIL import Image
 import torch
 from flask import Flask, request, jsonify
 import base64
+import json
 
 app = Flask(__name__)
 
@@ -32,11 +33,13 @@ def predict():
     #     print(image_file)
     #     image_bytes = image_file.read()
 
-    img = Image.open('D:\UDEMY\PRACTICE\TechSeeds_SF_UH21\api_yolov5\deer_decode.jpg')
+    img = Image.open('deer_decode.jpg')
+    print(type(img))
 
     results = model(img, size=640)
     data = results.pandas().xyxy[0].to_json(orient="records")
-    return data
+
+    return json.loads(data[1:len(data)-1])
 
 
 if __name__ == "__main__":
