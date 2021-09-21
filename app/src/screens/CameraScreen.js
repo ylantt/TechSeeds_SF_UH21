@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Camera } from "expo-camera";
 import { bases, texts, utilities } from "../styles";
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 export default function App({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
-  const [cameraRef, setCameraRef] = useState(null)
+  const [cameraRef, setCameraRef] = useState(null);
   // default is front camera
   const [type, setType] = useState(Camera.Constants.Type.front);
 
@@ -14,7 +14,7 @@ export default function App({ navigation }) {
     // request permission on the first time access to camera
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -23,22 +23,20 @@ export default function App({ navigation }) {
     return <View />;
   }
 
-  // user not allow access to camera 
+  // user not allow access to camera
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
 
   return (
-    <View
-      style={[bases.container, { padding: 0, }]}
-    >
+    <View style={[bases.container, { padding: 0 }]}>
       <Camera
         type={type}
-        ref={ref => {
+        ref={(ref) => {
           setCameraRef(ref);
         }}
         autoFocus="on"
-        style={[bases.container, { padding: 0, }]}
+        style={[bases.container, { padding: 0 }]}
       >
         <View>
           <View style={[utilities.flexRow, styles.groupBtn]}>
@@ -46,28 +44,32 @@ export default function App({ navigation }) {
               // capture image and send to Image component
               onPress={async () => {
                 if (cameraRef) {
-                  let photo = await cameraRef.takePictureAsync("photo");
+                  let photo = await cameraRef.takePictureAsync({
+                    base64: true,
+                  });
                   navigation.navigate("EvaluateImg", { photo });
                 }
-              }}>
-              <View style={styles.captureBtn} ></View>
+              }}
+            >
+              <View style={styles.captureBtn}></View>
             </TouchableOpacity>
 
             <TouchableOpacity
-              // convert cameratype from front <=> back 
+              // convert cameratype from front <=> back
               onPress={() => {
                 setType(
                   type === Camera.Constants.Type.back
                     ? Camera.Constants.Type.front
                     : Camera.Constants.Type.back
                 );
-              }}>
+              }}
+            >
               <Text style={[texts.normalText, styles.flipBtn]}> Flip </Text>
             </TouchableOpacity>
           </View>
-        </View >
-      </Camera >
-    </View >
+        </View>
+      </Camera>
+    </View>
   );
 }
 
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     // justifyContent: "flex-end",
     position: "absolute",
     top: hp("78%"),
-    alignSelf: "center"
+    alignSelf: "center",
   },
   captureBtn: {
     borderWidth: 6,
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     width: hp("10%"),
     backgroundColor: "transparent",
     marginBottom: hp("2%"),
-    marginRight: 20
+    marginRight: 20,
   },
   flipBtn: {
     borderRadius: 8,
@@ -97,5 +99,5 @@ const styles = StyleSheet.create({
     width: hp("10%"),
     backgroundColor: "white",
     lineHeight: hp("5%"),
-  }
+  },
 });
