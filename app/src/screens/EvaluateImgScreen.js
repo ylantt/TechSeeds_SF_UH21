@@ -8,6 +8,7 @@ const EvaluateImgScreen = ({ navigation }) => {
   // get photo from camera
   const photo = navigation.getParam("photo");
   const [name, setName] = useState("");
+  const [confidence, setConfidence] = useState(0);
 
   const getDataFromModel = async (photoBase64) => {
     try {
@@ -25,6 +26,7 @@ const EvaluateImgScreen = ({ navigation }) => {
       } else if (data.name === "mun_viem_do") {
         setName("Mụn viêm đỏ");
       }
+      setConfidence((data.confidence * 100).toFixed(2));
     } catch {
       setName("Không nhận dạng được loại bệnh nào");
     }
@@ -40,9 +42,9 @@ const EvaluateImgScreen = ({ navigation }) => {
           style={[styles.evaluateImg, utilities.mt3]}
         />
         <Text style={[texts.midText, utilities.mt3]}>{name}</Text>
-      </View>
-      <View>
-        <Text style={{ fontSize: 50 }}>{name}</Text>
+        <Text
+          style={[texts.midText, utilities.mt3]}
+        >{`Độ tin cậy: ${confidence}%`}</Text>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Intro")}>
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
