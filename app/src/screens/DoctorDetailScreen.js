@@ -89,10 +89,6 @@ const styles = StyleSheet.create({
     width: hp("30%"),
     height: hp("30%"),
     alignSelf: "center",
-<<<<<<< HEAD
-    marginVertical: hp("2%"),
-  },
-=======
     marginVertical: hp("2%")
   },
   smallIcon: {
