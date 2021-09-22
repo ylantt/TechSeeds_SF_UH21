@@ -2,41 +2,52 @@ import React from "react";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { bases, texts, utilities } from "../styles";
 import Footer from "../components/Footer";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import axios from 'axios';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import axios from "axios";
 
-// const baseUrl = "http://192.168.1.6:5000";
-const baseUrl = "http://127.0.0.1:5000";
+const baseUrl = "http://192.168.1.9:5000";
+// const baseUrl = "http://127.0.0.1:5000";
 
 class DoctorDetailScreen extends React.Component {
   state = {
-    doctor: {}
-  }
+    doctor: {},
+  };
 
   componentDidMount() {
-    const doctorId = (this.props.navigation.getParam('doctorId')).toString();
+    const doctorId = this.props.navigation.getParam("doctorId").toString();
 
-    axios.get(`${baseUrl}/api/v1/doctors/${doctorId}`).then((responseJson) => {
-      this.setState(() => ({ doctor: responseJson.data }));
-    }).catch((error) => {
-      alert(error);
-    });
+    axios
+      .get(`${baseUrl}/api/v1/doctors/${doctorId}`)
+      .then((responseJson) => {
+        this.setState(() => ({ doctor: responseJson.data }));
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }
 
   render() {
     return (
-      <View style={[bases.container]} >
-        <View style={[utilities.flexStretch]} >
+      <View style={[bases.container]}>
+        <View style={[utilities.flexStretch]}>
           <Image style={styles.img} source={{ uri: this.state.doctor.avt }} />
           <View style={utilities.flexRow}>
             <Text>km</Text>
             <View style={{ marginLeft: wp("5%") }}>
-              <Text style={[
-                texts.midText, {
-                  textAlign: "left",
-                  fontWeight: "700"
-                }
-              ]}>{this.state.doctor.name}</Text>
+              <Text
+                style={[
+                  texts.midText,
+                  {
+                    textAlign: "left",
+                    fontWeight: "700",
+                  },
+                ]}
+              >
+                {this.state.doctor.name}
+              </Text>
               <Text>{this.state.doctor.company}</Text>
             </View>
           </View>
@@ -68,16 +79,20 @@ class DoctorDetailScreen extends React.Component {
           <Text style={[utilities.mt7, texts.normalText]}>{this.state.doctor.info}</Text>
         </View>
         <Footer {...this.props.navigation} />
-      </View >
-    )
+      </View>
+    );
   }
-};
+}
 
 const styles = StyleSheet.create({
   img: {
-    width: hp('30%'),
-    height: hp('30%'),
+    width: hp("30%"),
+    height: hp("30%"),
     alignSelf: "center",
+<<<<<<< HEAD
+    marginVertical: hp("2%"),
+  },
+=======
     marginVertical: hp("2%")
   },
   smallIcon: {
@@ -90,6 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     marginHorizontal: wp("15%")
   }
+>>>>>>> f0d0b26f6fcee5073ba5a9cf30e22a978c8c6e51
 });
 
 export default DoctorDetailScreen;
