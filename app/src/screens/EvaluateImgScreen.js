@@ -42,7 +42,7 @@ const EvaluateImgScreen = ({ navigation }) => {
         <Text style={[texts.midText, utilities.mt3]}>{name}</Text>
       </View>
       <View>
-        <Text>{name}</Text>
+        <Text style={{ fontSize: 50 }}>{name}</Text>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Intro")}>
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
