@@ -8,6 +8,7 @@ const EvaluateImgScreen = ({ navigation }) => {
   // get photo from camera
   const photo = navigation.getParam("photo");
   const [name, setName] = useState("");
+  const [problem, setProblem] = useState("");
   const [confidence, setConfidence] = useState(0);
 
   const getDataFromModel = async (photoBase64) => {
@@ -21,10 +22,13 @@ const EvaluateImgScreen = ({ navigation }) => {
 
       if (data.name === "nam_da") {
         setName("Nám da");
+        setProblem("MX");
       } else if (data.name === "viem_da_tiet_ba") {
         setName("Viêm da tiết bã");
+        setProblem("SD");
       } else if (data.name === "mun_viem_do") {
         setName("Mụn viêm đỏ");
+        setProblem("IA");
       }
       setConfidence((data.confidence * 100).toFixed(2));
     } catch {
@@ -46,22 +50,25 @@ const EvaluateImgScreen = ({ navigation }) => {
         ) : name === "Không nhận dạng được loại bệnh nào" ? (
           <Text style={[texts.midText, utilities.mt3]}>{name}</Text>
         ) : (
-          <View>
-            <Text style={[texts.midText, utilities.mt7]}>
-              Loại bệnh: {name}
-            </Text>
-            <Text
-              style={[texts.midText, utilities.mt3]}
-            >{`Độ tin cậy: ${confidence}%`}</Text>
-          </View>
-        )}
+              <View>
+                <Text style={[texts.midText, utilities.mt7]}>
+                  Loại bệnh: {name}
+                </Text>
+                <Text
+                  style={[texts.midText, utilities.mt3]}
+                >{`Độ tin cậy: ${confidence}%`}</Text>
+              </View>
+            )}
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Intro")}>
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
           Take Guide
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("DoctorList")}>
+      <TouchableOpacity onPress={() => navigation.navigate("DoctorList", {
+        problem: problem
+      })}
+      >
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
           Connect doctor
         </Text>
