@@ -6,6 +6,10 @@ const ProblemSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add a name of problem"],
     },
+    key: {
+      type: String,
+      required: [true, "Please add a key of problem"],
+    },
   },
   {
     timestamps: true,
