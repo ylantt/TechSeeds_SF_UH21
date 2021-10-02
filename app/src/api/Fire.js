@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import { call } from "react-native-reanimated";
 
 class Fire {
   constructor() {
