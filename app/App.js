@@ -35,7 +35,7 @@ const navigator = createStackNavigator(
     PrescriptionsList: PrescriptionsListScreen,
   },
   {
-    initialRouteName: "Welcome",
+    initialRouteName: "Chat",
     defaultNavigationOptions: {
       title: "Skinee",
     },
