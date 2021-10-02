@@ -15,8 +15,10 @@ connectDB();
 
 // Route file
 const auth = require("./routes/auth");
-const user = require("./routes/user");
-const doctor = require("./routes/doctor");
+const users = require("./routes/user");
+const doctors = require("./routes/doctor");
+const problems = require("./routes/problem");
+const medicines = require("./routes/medicine");
 
 const app = express();
 
@@ -45,8 +47,10 @@ app.use(cors());
 
 // Mount routes
 app.use("/api/v1/auth", auth);
-app.use("/api/v1/user", user);
-app.use("/api/v1/doctors", doctor);
+app.use("/api/v1/user", users);
+app.use("/api/v1/doctors", doctors);
+app.use("/api/v1/problems", problems);
+app.use("/api/v1/medicines", medicines);
 
 app.use(errorHandler);
 
