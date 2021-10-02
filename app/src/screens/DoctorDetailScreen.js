@@ -6,10 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import axios from "axios";
-
-const baseUrl = "http://192.168.1.2:5000";
-// const baseUrl = "http://127.0.0.1:5000";
+import trackerApi from "../api/tracker";
 
 class DoctorDetailScreen extends React.Component {
   state = {
@@ -19,8 +16,8 @@ class DoctorDetailScreen extends React.Component {
   componentDidMount() {
     const doctorId = this.props.navigation.getParam("doctorId").toString();
 
-    axios
-      .get(`${baseUrl}/api/v1/doctors/${doctorId}`)
+    trackerApi
+      .get(`/doctors/${doctorId}`)
       .then((responseJson) => {
         this.setState(() => ({ doctor: responseJson.data }));
       })
@@ -30,14 +27,16 @@ class DoctorDetailScreen extends React.Component {
   }
 
   render() {
+    const doctor = this.state.doctor;
+
     return (
       <View style={[bases.container]}>
         <View style={[utilities.flexStretch]}>
           <View style={styles.bigBackground}>
-            <View ></View>
+            <View></View>
             <Image style={styles.img} source={{ uri: this.state.doctor.avt }} />
           </View>
-          <View style={utilities.flexRow, { alignSelf: "center", }}>
+          <View style={(utilities.flexRow, { alignSelf: "center" })}>
             <View>
               <Text
                 style={[
@@ -52,7 +51,11 @@ class DoctorDetailScreen extends React.Component {
                 Doctor {this.state.doctor.name}
               </Text>
               <Text>{this.state.doctor.company}</Text>
-              <Text style={utilities.mt3, { fontWeight: "bold", color: "red" }}>Rating: {this.state.doctor.rating} / 5</Text>
+              <Text
+                style={(utilities.mt3, { fontWeight: "bold", color: "red" })}
+              >
+                Rating: {this.state.doctor.rating} / 5
+              </Text>
             </View>
           </View>
 
@@ -66,7 +69,7 @@ class DoctorDetailScreen extends React.Component {
             </View>
 
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Chat")}
+              onPress={() => this.props.navigation.navigate("Chat", { doctor })}
             >
               <Image
                 style={styles.smallIcon}
@@ -104,11 +107,17 @@ class DoctorDetailScreen extends React.Component {
               style={styles.smallIcon}
               source={require("../../assets/images/components/doctorAction/rating.png")}
             />
-            <Text style={texts.midText, { fontWeight: "bold", marginLeft: wp("2%") }}>View all reviews</Text>
+            <Text
+              style={
+                (texts.midText, { fontWeight: "bold", marginLeft: wp("2%") })
+              }
+            >
+              View all reviews
+            </Text>
           </TouchableOpacity>
         </View>
         <Footer {...this.props.navigation} />
-      </View >
+      </View>
     );
   }
 }
@@ -134,8 +143,8 @@ const styles = StyleSheet.create({
     marginHorizontal: wp("15%"),
   },
   bigBackground: {
-    backgroundColor: "#A066CB"
-  }
+    backgroundColor: "#A066CB",
+  },
 });
 
 export default DoctorDetailScreen;

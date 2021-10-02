@@ -1,22 +1,43 @@
 import Fire from "../api/Fire";
 import React, { useState, useCallback, useEffect } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
+import * as SecureStore from "expo-secure-store";
+import trackerApi from "../api/tracker";
 
-export default function ChatScreen() {
+export default function ChatScreen({ navigation }) {
   const [user, setUser] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [name, setName] = useState(null);
+  const [doctor, setDoctor] = useState(navigation.getParam("doctor"));
+
+  console.log(userId);
+  console.log(doctor);
 
   useEffect(() => {
+    (async () => {
+      const token = await SecureStore.getItemAsync("secure_token");
+      const { data } = await trackerApi("/auth/me", {
+        headers: { authorization: `Bearer ${token}` },
+      });
+
+      setUserId(data.data._id);
+      setName(data.data.name);
+    })();
+
     Fire.get((message) => {
-      console.log(message);
-      setMessages((previousMessages) =>
-        GiftedChat.append(previousMessages, message)
-      );
+      if (doctor) {
+        if (message.user._id === doctor._id || message.user._id === userId) {
+          setMessages((previousMessages) =>
+            GiftedChat.append(previousMessages, message)
+          );
+        }
+      }
     });
 
     setUser({
-      _id: "615833db79bbd3d7e1ab9fcd",
-      name: "Cui",
+      _id: userId,
+      name: name,
     });
   }, []);
 
