@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Doctor = require("../models/Doctor");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const ErrorResponse = require("../untils/errorResponse");
@@ -30,14 +31,33 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
         user.isFullData = false;
       } else {
         user.isFullData = true;
+        user.role = "user";
       }
       sendTokenResponse(user, 200, res);
-    } else {
-      let password = email + process.env.JWT_SECRET;
-      const newUser = await User.create({ name, email, password });
-      newUser.isFullData = false;
-      sendTokenResponse(newUser, 200, res);
     }
+
+    const doctor = await Doctor.findOne({ email }).exec();
+
+    if (doctor) {
+      if (!doctor.bio || !doctor.company) {
+        doctor.isFullData = false;
+      } else {
+        doctor.isFullData = true;
+        doctor.role = "doctor";
+      }
+      sendTokenResponse(doctor, 200, res);
+    }
+
+    res.status(200).json({
+      success: false,
+    });
+
+    // User not valid
+
+    // let password = email + process.env.JWT_SECRET;
+    // const newUser = await User.create({ name, email, password });
+    // newUser.isFullData = false;
+    // sendTokenResponse(newUser, 200, res);
   } else {
     return new ErrorResponse("Some thing went wrong!", 400);
   }
@@ -61,6 +81,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   res.status(statusCode).cookie("token", token, options).json({
     isFullData: user.isFullData,
+    role: user.role,
     success: true,
     token,
   });

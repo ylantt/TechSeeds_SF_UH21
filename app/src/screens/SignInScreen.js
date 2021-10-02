@@ -11,7 +11,6 @@ import {
 import { bases, buttons, texts, images, utilities } from "../styles";
 import * as Google from "expo-google-app-auth";
 import * as SecureStore from "expo-secure-store";
-import axios from "axios";
 import trackerApi from "../api/tracker";
 
 const IOS_CLIENT_ID =
@@ -38,12 +37,24 @@ const signInWithGoogle = async (navigation) => {
           platform,
         });
 
-        if (data.success) {
+        if (data.success == false) {
+          const user = result.user;
+          navigation.navigate("Role", { user });
+        } else if (data.success == true) {
           await SecureStore.setItemAsync("secure_token", data.token);
           if (data.isFullData) {
-            navigation.navigate("Home");
+            if (data.role == "user") {
+              navigation.navigate("Home");
+            } else {
+              // Home of doctor screen
+              navigation.navigate("Home");
+            }
           } else {
-            navigation.navigate("InfoForm");
+            if (data.role == "user") {
+              navigation.navigate("InfoForm");
+            } else {
+              navigation.navigate("InfoDoctorForm");
+            }
           }
         } else {
           console.log("Some thing went wrong!");

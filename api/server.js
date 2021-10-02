@@ -47,7 +47,7 @@ app.use(cors());
 
 // Mount routes
 app.use("/api/v1/auth", auth);
-app.use("/api/v1/user", users);
+app.use("/api/v1/users", users);
 app.use("/api/v1/doctors", doctors);
 app.use("/api/v1/problems", problems);
 app.use("/api/v1/medicines", medicines);
