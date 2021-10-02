@@ -71,23 +71,3 @@ class Fire {
 }
 
 export default new Fire();
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAYWHmj94HtRtgxySxi5NV8V9hZinsY4XA",
-  authDomain: "skinee-chat-app.firebaseapp.com",
-  projectId: "skinee-chat-app",
-  storageBucket: "skinee-chat-app.appspot.com",
-  messagingSenderId: "539097887306",
-  appId: "1:539097887306:web:5619eaf15ca56f87b72cb3",
-};
-
-let app;
-
-if (firebase.apps.length === 0) {
-  app = firebase.initializeApp(firebaseConfig);
-} else {
-  app = firebase.app();
-}
-
-const db = app.firestore();
-const auth = firebase.auth();
