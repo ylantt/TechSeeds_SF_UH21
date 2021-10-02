@@ -14,6 +14,7 @@ import RoleScreen from "./src/screens/RoleScreen";
 import InfoDoctorFormScreen from "./src/screens/InfoDoctorFormScreen";
 import DashboardDoctorScreen from "./src/screens/DashboardDoctorScreen";
 import ChatToPatientsListScreen from "./src/screens/ChatToPatientsListScreen";
+import PrescriptionsListScreen from "./src/screens/PrescriptionsListScreen";
 
 const navigator = createStackNavigator(
   {
@@ -31,6 +32,7 @@ const navigator = createStackNavigator(
     InfoDoctorForm: InfoDoctorFormScreen,
     DashboardDoctor: DashboardDoctorScreen,
     ChatToPatientsList: ChatToPatientsListScreen,
+    PrescriptionsList: PrescriptionsListScreen,
   },
   {
     initialRouteName: "Chat",
