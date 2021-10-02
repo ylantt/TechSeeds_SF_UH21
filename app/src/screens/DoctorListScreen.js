@@ -15,7 +15,7 @@ class DoctorList extends React.Component {
   };
 
   componentDidMount() {
-    const problem = this.props.navigation.getParam("problem").toString();
+    const problem = this.props.navigation.getParam("problem") ? this.props.navigation.getParam("problem").toString() : " ";
 
     axios
       .get(`${baseUrl}/api/v1/doctors?problem=${problem}`)
