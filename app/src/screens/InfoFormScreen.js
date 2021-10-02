@@ -24,7 +24,7 @@ const updateUserInfo = async (navigation, yearOfBirth, gender, phone) => {
   const token = await SecureStore.getItemAsync("secure_token");
 
   const { data } = await trackApi.post(
-    "/user",
+    "/users/update",
     {
       yearOfBirth,
       gender,

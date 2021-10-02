@@ -14,7 +14,7 @@ const EvaluateImgScreen = ({ navigation }) => {
   const getDataFromModel = async (photoBase64) => {
     try {
       const { data } = await axios.post(
-        "http://192.168.1.2:8000/v1/object-detection/yolov5s",
+        "http://192.168.1.8:8000/v1/object-detection/yolov5s",
         {
           photoBase64,
         }
