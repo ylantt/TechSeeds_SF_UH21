@@ -32,14 +32,8 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    problem: {
-      type: [
-        {
-          problemKey: String,
-          level: Number,
-        },
-      ],
-    },
+    problem: Object
+
   },
   {
     timestamps: true,

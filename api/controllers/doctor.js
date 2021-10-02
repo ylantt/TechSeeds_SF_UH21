@@ -4,7 +4,15 @@ const asyncHandler = require("../middlewares/async");
 
 exports.getDoctorList = async (req, res) => {
   try {
-    const doctors = await Doctor.find();
+    const problem = req.query.problem;
+    let doctors = null;
+
+    if (problem === "SD")
+      doctors = await Doctor.find().sort({ "problem.SD": -1, "rating": -1 }).limit(3);
+    else if (problem === "IA")
+      doctors = await Doctor.find().sort({ "problem.IA": -1, "rating": -1 }).limit(3);
+    else
+      doctors = await Doctor.find().sort({ "problem.MX": -1, "rating": -1 }).limit(3);
 
     res.send(doctors);
   } catch (e) {
