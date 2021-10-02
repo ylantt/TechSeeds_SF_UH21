@@ -1,10 +1,16 @@
-const express = require('express');
-const doctorController = require('../controllers/doctor');
+const express = require("express");
+const {
+  getDoctorList,
+  getDoctor,
+  addDoctor,
+} = require("../controllers/doctor");
 
 const router = express.Router();
 
-router.route('/').get(doctorController.getDoctorList);
+const { protect, authorize } = require("../middlewares/auth");
 
-router.route('/:id').get(doctorController.getDoctor)
+router.route("/").get(getDoctorList).post(addDoctor);
+
+router.route("/:id").get(getDoctor);
 
 module.exports = router;
