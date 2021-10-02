@@ -11,9 +11,6 @@ export default function ChatScreen({ navigation }) {
   const [name, setName] = useState(null);
   const [doctor, setDoctor] = useState(navigation.getParam("doctor"));
 
-  console.log(userId);
-  console.log(doctor);
-
   useEffect(() => {
     (async () => {
       const token = await SecureStore.getItemAsync("secure_token");
@@ -23,22 +20,22 @@ export default function ChatScreen({ navigation }) {
 
       setUserId(data.data._id);
       setName(data.data.name);
-    })();
 
-    Fire.get((message) => {
-      if (doctor) {
-        if (message.user._id === doctor._id || message.user._id === userId) {
-          setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, message)
-          );
+      setUser({
+        _id: userId,
+        name: name,
+      });
+
+      await Fire.get((message) => {
+        if (doctor) {
+          if (message.user._id === doctor._id || message.user._id === userId) {
+            setMessages((previousMessages) =>
+              GiftedChat.append(previousMessages, message)
+            );
+          }
         }
-      }
-    });
-
-    setUser({
-      _id: userId,
-      name: name,
-    });
+      });
+    })();
   }, []);
 
   const onSend = useCallback((messages = []) => {
