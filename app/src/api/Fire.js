@@ -11,6 +11,7 @@ class Fire {
       firebase.initializeApp({
         apiKey: "AIzaSyAYWHmj94HtRtgxySxi5NV8V9hZinsY4XA",
         authDomain: "skinee-chat-app.firebaseapp.com",
+        databaseURL: "https://skinee-chat-app-default-rtdb.firebaseio.com",
         projectId: "skinee-chat-app",
         storageBucket: "skinee-chat-app.appspot.com",
         messagingSenderId: "539097887306",
