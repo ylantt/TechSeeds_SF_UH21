@@ -17,6 +17,7 @@ connectDB();
 const auth = require("./routes/auth");
 const user = require("./routes/user");
 const doctor = require("./routes/doctor");
+const problem = require("./routes/problem");
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(cors());
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/user", user);
 app.use("/api/v1/doctors", doctor);
+app.use("/api/v1/problems", problem);
 
 app.use(errorHandler);
 
