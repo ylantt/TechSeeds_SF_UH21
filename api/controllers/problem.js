@@ -8,7 +8,7 @@ const asyncHandler = require("../middlewares/async");
 exports.getProblems = asyncHandler(async (req, res) => {
   const problems = await Problem.find();
 
-  res.status(201).json({
+  res.status(200).json({
     success: true,
     data: problems,
   });

@@ -9,7 +9,13 @@ const EvaluateImgScreen = ({ navigation }) => {
   const photo = navigation.getParam("photo");
   const [name, setName] = useState("");
   const [problem, setProblem] = useState("");
-  const [confidence, setConfidence] = useState(0);
+  const [level, setLevel] = useState("");
+
+  const reason = {
+    nam_da: "",
+    mun_viem_do: "",
+    viem_da_tiet_ba: "",
+  };
 
   const getDataFromModel = async (photoBase64) => {
     try {
@@ -30,9 +36,14 @@ const EvaluateImgScreen = ({ navigation }) => {
         setName("Mụn viêm đỏ");
         setProblem("IA");
       }
-      setConfidence((data.confidence * 100).toFixed(2));
+
+      if (data.level >= 0.4) {
+        setLevel("Nặng");
+      } else {
+        setLevel("Nhẹ");
+      }
     } catch {
-      setName("Không nhận dạng được loại bệnh nào");
+      setName("Da của bạn khoẻ mạnh. Hãy chăm sóc da thường xuyên nhé!");
     }
   };
 
@@ -47,27 +58,29 @@ const EvaluateImgScreen = ({ navigation }) => {
         />
         {name === "" ? (
           <Text style={[texts.midText, utilities.mt3]}>Đang phân tích...</Text>
-        ) : name === "Không nhận dạng được loại bệnh nào" ? (
+        ) : name ===
+          "Da của bạn khoẻ mạnh. Hãy chăm sóc da thường xuyên nhé!" ? (
           <Text style={[texts.midText, utilities.mt3]}>{name}</Text>
         ) : (
-              <View>
-                <Text style={[texts.midText, utilities.mt7]}>
-                  Loại bệnh: {name}
-                </Text>
-                <Text
-                  style={[texts.midText, utilities.mt3]}
-                >{`Độ tin cậy: ${confidence}%`}</Text>
-              </View>
-            )}
+          <View>
+            <Text style={[texts.midText, utilities.mt7]}>
+              Bệnh được chuẩn đoán: {name}
+            </Text>
+            <Text style={[texts.midText]}>{`Mức độ: ${level}`}</Text>
+          </View>
+        )}
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Intro")}>
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
           Take Guide
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("DoctorList", {
-        problem: problem
-      })}
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("DoctorList", {
+            problem: problem,
+          })
+        }
       >
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
           Connect doctor
@@ -82,6 +95,7 @@ const styles = StyleSheet.create({
     width: hp("27%"),
     height: hp("27%"),
     alignSelf: "center",
+    borderRadius: 40,
   },
 });
 

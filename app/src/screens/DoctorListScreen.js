@@ -4,10 +4,7 @@ import { bases, texts, utilities } from "../styles";
 import Footer from "../components/Footer";
 import DoctorShortInfo from "../components/DoctorShortInfo";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import axios from "axios";
-
-const baseUrl = "http://192.168.1.2:5000";
-// const baseUrl = "http://127.0.0.1:5000";
+import trackerApi from "../api/tracker";
 
 class DoctorList extends React.Component {
   state = {
@@ -15,10 +12,12 @@ class DoctorList extends React.Component {
   };
 
   componentDidMount() {
-    const problem = this.props.navigation.getParam("problem") ? this.props.navigation.getParam("problem").toString() : " ";
+    const problem = this.props.navigation.getParam("problem")
+      ? this.props.navigation.getParam("problem").toString()
+      : " ";
 
-    axios
-      .get(`${baseUrl}/api/v1/doctors?problem=${problem}`)
+    trackerApi
+      .get(`/doctors?problem=${problem}`)
       .then((responseJson) => {
         this.setState(() => ({ doctors: responseJson.data }));
       })
