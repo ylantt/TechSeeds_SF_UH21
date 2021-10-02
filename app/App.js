@@ -33,7 +33,7 @@ const navigator = createStackNavigator(
     ChatToPatientsList: ChatToPatientsListScreen,
   },
   {
-    initialRouteName: "Welcome",
+    initialRouteName: "Chat",
     defaultNavigationOptions: {
       title: "Skinee",
     },
