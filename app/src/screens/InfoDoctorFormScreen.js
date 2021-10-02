@@ -38,7 +38,7 @@ const InfoFormScreen = () => {
         <View style={utilities.mt7}>
           <View>
             <Text>Evaluate your levels in each field</Text>
-            {problems &&
+            {!!problems &&
               problems.map((problem) => (
                 <View style={utilities.mt3} key={problem.key}>
                   <Text>{problem.name}</Text>
