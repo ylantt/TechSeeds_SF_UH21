@@ -19,6 +19,7 @@ const users = require("./routes/user");
 const doctors = require("./routes/doctor");
 const problems = require("./routes/problem");
 const medicines = require("./routes/medicine");
+const prescriptions = require("./routes/prescription");
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use("/api/v1/user", users);
 app.use("/api/v1/doctors", doctors);
 app.use("/api/v1/problems", problems);
 app.use("/api/v1/medicines", medicines);
+app.use("/api/v1/prescriptions", prescriptions);
 
 app.use(errorHandler);
 
