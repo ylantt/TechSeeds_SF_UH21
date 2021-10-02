@@ -7,8 +7,6 @@ const cors = require("cors");
 const errorHandler = require("./middlewares/error");
 const cookieParser = require("cookie-parser");
 
-const doctorRoutes = require('./routes/doctor');
-
 // Load env vars
 dotenv.config({ path: "./config/config.env" });
 
@@ -18,12 +16,16 @@ connectDB();
 // Route file
 const auth = require("./routes/auth");
 const user = require("./routes/user");
+const doctor = require("./routes/doctor");
 
 const app = express();
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
@@ -41,12 +43,10 @@ if (process.env.NODE_ENV === "development") {
 // Enable CORS
 app.use(cors());
 
-// ROUTING 
-app.use("/api/v1/doctors", doctorRoutes);
-
 // Mount routes
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/user", user);
+app.use("/api/v1/doctors", doctor);
 
 app.use(errorHandler);
 

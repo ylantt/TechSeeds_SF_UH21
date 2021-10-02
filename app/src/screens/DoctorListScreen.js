@@ -6,7 +6,7 @@ import DoctorShortInfo from "../components/DoctorShortInfo";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import axios from "axios";
 
-const baseUrl = "http://192.168.1.9:5000";
+const baseUrl = "http://192.168.1.2:5000";
 // const baseUrl = "http://127.0.0.1:5000";
 
 class DoctorList extends React.Component {

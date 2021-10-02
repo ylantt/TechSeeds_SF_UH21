@@ -13,7 +13,7 @@ const EvaluateImgScreen = ({ navigation }) => {
   const getDataFromModel = async (photoBase64) => {
     try {
       const { data } = await axios.post(
-        "http://192.168.1.9:8000/v1/object-detection/yolov5s",
+        "http://192.168.1.2:8000/v1/object-detection/yolov5s",
         {
           photoBase64,
         }
@@ -41,10 +41,20 @@ const EvaluateImgScreen = ({ navigation }) => {
           source={{ uri: photo.uri }}
           style={[styles.evaluateImg, utilities.mt3]}
         />
-        <Text style={[texts.midText, utilities.mt3]}>{name}</Text>
-        <Text
-          style={[texts.midText, utilities.mt3]}
-        >{`Độ tin cậy: ${confidence}%`}</Text>
+        {name === "" ? (
+          <Text style={[texts.midText, utilities.mt3]}>Đang phân tích...</Text>
+        ) : name === "Không nhận dạng được loại bệnh nào" ? (
+          <Text style={[texts.midText, utilities.mt3]}>{name}</Text>
+        ) : (
+          <View>
+            <Text style={[texts.midText, utilities.mt7]}>
+              Loại bệnh: {name}
+            </Text>
+            <Text
+              style={[texts.midText, utilities.mt3]}
+            >{`Độ tin cậy: ${confidence}%`}</Text>
+          </View>
+        )}
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Intro")}>
         <Text style={[buttons.btn, buttons.bottomBtn, buttons.roundBtn]}>
