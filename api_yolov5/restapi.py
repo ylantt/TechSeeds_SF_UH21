@@ -39,7 +39,18 @@ def predict():
     results = model(img, size=640)
     data = results.pandas().xyxy[0].to_json(orient="records")
 
-    return json.loads(data[1:len(data)-1])
+    print(data)
+
+    data = json.loads(data[1:len(data) - 1])
+    try:
+        print("img shape: ", img.size)
+        img_size = img.size[0] * img.size[1]
+        skin_disease_area = (data['xmax'] - data['xmin']) * (data['ymax'] - data['ymin'])
+        data['level'] = skin_disease_area / img_size
+    except:
+        print('Error')
+    print(data)
+    return data
 
 
 if __name__ == "__main__":
