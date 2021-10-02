@@ -6,11 +6,8 @@ const router = express.Router();
 
 const { protect, authorize } = require("../middlewares/auth");
 
-router.use(protect);
+// router.use(protect);
 
-router
-  .route("/")
-  .post(authorize("user"), addMedicine)
-  .get(authorize("user"), getMedicines);
+router.route("/").post(addMedicine).get(getMedicines);
 
 module.exports = router;

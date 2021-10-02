@@ -20,7 +20,7 @@ exports.addMedicine = asyncHandler(async (req, res, next) => {
 exports.getMedicines = asyncHandler(async (req, res, next) => {
   const medicines = await Medicine.find();
 
-  res.status(201).json({
+  res.status(200).json({
     success: true,
     data: medicines,
   });
