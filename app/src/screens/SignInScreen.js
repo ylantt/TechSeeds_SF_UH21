@@ -43,11 +43,11 @@ const signInWithGoogle = async (navigation) => {
         } else if (data.success == true) {
           await SecureStore.setItemAsync("secure_token", data.token);
           if (data.isFullData) {
-            if (data.role == "user") {
+            if (data.role === "user") {
               navigation.navigate("Home");
             } else {
               // Home of doctor screen
-              navigation.navigate("Home");
+              navigation.navigate("DashboardDoctor");
             }
           } else {
             if (data.role == "user") {

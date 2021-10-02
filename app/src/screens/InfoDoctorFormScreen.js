@@ -108,7 +108,10 @@ const InfoDoctorFormScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <TouchableOpacity style={utilities.mt3}>
+      <TouchableOpacity
+        style={utilities.mt3}
+        onPress={() => navigation.navigate("DashboardDoctor")}
+      >
         <Text style={[buttons.btn, buttons.bottomBtn]}>Let's get started</Text>
       </TouchableOpacity>
     </View>
