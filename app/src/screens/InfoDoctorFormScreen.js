@@ -14,7 +14,6 @@ const InfoFormScreen = () => {
   const [SD, setSD] = useState("1");
   const [IA, setIA] = useState("1");
   const [MX, setMX] = useState("1");
-  const [name, setName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyWeb, setCompanyWeb] = useState("");
   const [bio, setBio] = useState("");
@@ -38,15 +37,7 @@ const InfoFormScreen = () => {
         </Text>
         <View style={utilities.mt7}>
           <View>
-            <Text>Name</Text>
-            <TextInput
-              style={formFields.input}
-              placeholder="Name"
-              onChangeText={(name) => setName(name)}
-            />
-          </View>
-          <View>
-            <Text style={utilities.mt3}>Evaluate your levels in each field</Text>
+            <Text>Evaluate your levels in each field</Text>
             {problems &&
               problems.map((problem) => (
                 <View style={utilities.mt3} key={problem.key}>
