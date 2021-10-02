@@ -33,22 +33,26 @@ class DoctorDetailScreen extends React.Component {
     return (
       <View style={[bases.container]}>
         <View style={[utilities.flexStretch]}>
-          <Image style={styles.img} source={{ uri: this.state.doctor.avt }} />
-          <View style={utilities.flexRow}>
-            <Text>km</Text>
-            <View style={{ marginLeft: wp("5%") }}>
+          <View style={styles.bigBackground}>
+            <View ></View>
+            <Image style={styles.img} source={{ uri: this.state.doctor.avt }} />
+          </View>
+          <View style={utilities.flexRow, { alignSelf: "center", }}>
+            <View>
               <Text
                 style={[
                   texts.midText,
+                  utilities.mt3,
                   {
                     textAlign: "left",
                     fontWeight: "700",
                   },
                 ]}
               >
-                {this.state.doctor.name}
+                Doctor {this.state.doctor.name}
               </Text>
               <Text>{this.state.doctor.company}</Text>
+              <Text style={utilities.mt3, { fontWeight: "bold", color: "red" }}>Rating: {this.state.doctor.rating} / 5</Text>
             </View>
           </View>
 
@@ -89,11 +93,22 @@ class DoctorDetailScreen extends React.Component {
           </View>
 
           <Text style={[utilities.mt7, texts.normalText]}>
-            {this.state.doctor.info}
+            {this.state.doctor.bio}
           </Text>
+
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("ReviewList")}
+            style={utilities.flexRow}
+          >
+            <Image
+              style={styles.smallIcon}
+              source={require("../../assets/images/components/doctorAction/rating.png")}
+            />
+            <Text style={texts.midText, { fontWeight: "bold", marginLeft: wp("2%") }}>View all reviews</Text>
+          </TouchableOpacity>
         </View>
         <Footer {...this.props.navigation} />
-      </View>
+      </View >
     );
   }
 }
@@ -102,8 +117,11 @@ const styles = StyleSheet.create({
   img: {
     width: hp("30%"),
     height: hp("30%"),
+    borderRadius: hp("15%"),
     alignSelf: "center",
     marginVertical: hp("2%"),
+    borderWidth: hp("1%"),
+    borderColor: "#fff",
   },
   smallIcon: {
     width: hp("5%"),
@@ -115,6 +133,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     marginHorizontal: wp("15%"),
   },
+  bigBackground: {
+    backgroundColor: "#A066CB"
+  }
 });
 
 export default DoctorDetailScreen;

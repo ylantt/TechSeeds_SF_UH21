@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { TextInput, View, TouchableOpacity } from "react-native";
-import { RadioButton, Text } from 'react-native-paper';
-import {
-  bases,
-  buttons,
-  texts,
-  utilities,
-  formFields,
-} from "../styles";
+import { RadioButton, Text } from "react-native-paper";
+import { bases, buttons, texts, utilities, formFields } from "../styles";
 import trackApi from "../api/tracker";
 
-const InfoFormScreen = () => {
+const InfoDoctorFormScreen = ({ navigation }) => {
   const [SD, setSD] = useState("1");
   const [IA, setIA] = useState("1");
   const [MX, setMX] = useState("1");
@@ -21,16 +15,18 @@ const InfoFormScreen = () => {
 
   useEffect(() => {
     (async () => {
-      const problem = await trackApi.get(
-        "/problems",
-      );
+      const problem = await trackApi.get("/problems");
 
       setProblems(problem.data.data);
     })();
   }, []);
 
   return (
-    <View style={[bases.container]}>
+    <View
+      style={[bases.container]}
+      keyboardShouldPersistTaps="never"
+      style={[bases.container]}
+    >
       <View style={utilities.flexStretch}>
         <Text style={[texts.midText, utilities.mt3]}>
           Tell us abit about yourself
@@ -42,23 +38,23 @@ const InfoFormScreen = () => {
               problems.map((problem) => (
                 <View style={utilities.mt3} key={problem.key}>
                   <Text>{problem.name}</Text>
-                  <RadioButton.Group onValueChange=
-                    {
-                      (newValue) => {
-                        if (problem.key === "SD") {
-                          setSD(newValue);
-                        }
-
-                        if (problem.key === "IA") {
-                          setIA(newValue);
-                        }
-
-                        if (problem.key === "MX") {
-                          setMX(newValue);
-                        }
+                  <RadioButton.Group
+                    onValueChange={(newValue) => {
+                      if (problem.key === "SD") {
+                        setSD(newValue);
                       }
+
+                      if (problem.key === "IA") {
+                        setIA(newValue);
+                      }
+
+                      if (problem.key === "MX") {
+                        setMX(newValue);
+                      }
+                    }}
+                    value={
+                      problem.key === "SD" ? SD : problem.key === "IA" ? IA : MX
                     }
-                    value={problem.key === "SD" ? SD : problem.key === "IA" ? IA : MX}
                   >
                     <View style={utilities.flexRow}>
                       <View style={{ alignSelf: "center" }}>
@@ -112,11 +108,14 @@ const InfoFormScreen = () => {
           </View>
         </View>
       </View>
-      <TouchableOpacity style={utilities.mt3}>
+      <TouchableOpacity
+        style={utilities.mt3}
+        onPress={() => navigation.navigate("DashboardDoctor")}
+      >
         <Text style={[buttons.btn, buttons.bottomBtn]}>Let's get started</Text>
       </TouchableOpacity>
-    </View >
+    </View>
   );
 };
 
-export default InfoFormScreen;
+export default InfoDoctorFormScreen;
