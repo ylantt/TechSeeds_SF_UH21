@@ -36,7 +36,7 @@ export default function ChatScreen({ navigation }) {
         }
       });
     })();
-  }, []);
+  });
 
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>

@@ -5,13 +5,11 @@ import Footer from "../components/Footer";
 import ChatTarget from "../components/ChatTarget";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-const DoctorList = ({ navigation }) => {
+const ChatToPatientsListScreen = ({ navigation }) => {
   return (
-    <View style={[bases.container, { padding: 0 }]} >
+    <View style={[bases.container, { padding: 0 }]}>
       <View style={[utilities.flexStretch, utilities.greyBg]}>
-        <ChatTarget
-          navigation={navigation}
-        />
+        <ChatTarget navigation={navigation} />
         <Text
           style={[
             texts.normalText,
@@ -22,11 +20,11 @@ const DoctorList = ({ navigation }) => {
           ]}
         >
           Developed by TechSeeds
-          </Text>
+        </Text>
       </View>
       <Footer {...navigation} />
     </View>
   );
-}
+};
 
-export default DoctorList;
+export default ChatToPatientsListScreen;
